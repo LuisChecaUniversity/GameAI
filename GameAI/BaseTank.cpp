@@ -38,7 +38,7 @@ BaseTank::BaseTank(SDL_Renderer* renderer, TankSetupDetails details)
 
 	//TODO: Read these details in from xml.
 	mMaxForce				= 10.0f;
-	mMaxTurnRate			= 0.01f;
+	mMaxTurnRate			= details.TurnRate / 500.0f;
 
 	mRockets				= details.NumOfRockets;
 	mBullets				= details.NumOfBullets;

@@ -1,23 +1,37 @@
-﻿Build started 15/01/2015 18:56:00.
-     1>Project "E:\GameAI\GameAI\GameAI\GameAI.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
-         Touching "Debug\GameAI.unsuccessfulbuild".
-       ClCompile:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IE:\GameAI\GameAI\GameAI\\SDL\mixer_include /IE:\GameAI\GameAI\GameAI\\SDL\include /IE:\GameAI\GameAI\GameAI\\SDL\image_include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ProjectileManager.cpp
-         ProjectileManager.cpp
-     1>e:\gameai\gameai\gameai\projectilemanager.cpp(66): error C2664: 'std::_Vector_iterator<_Myvec> std::vector<_Ty>::erase(std::_Vector_const_iterator<_Myvec>)' : cannot convert parameter 1 from 'int' to 'std::_Vector_const_iterator<_Myvec>'
-                 with
-                 [
-                     _Myvec=std::_Vector_val<int,std::allocator<int>>,
-                     _Ty=int
-                 ]
-                 and
-                 [
-                     _Myvec=std::_Vector_val<int,std::allocator<int>>
-                 ]
-                 No constructor could take the source type, or constructor overload resolution was ambiguous
-     1>Done Building Project "E:\GameAI\GameAI\GameAI\GameAI.vcxproj" (build target(s)) -- FAILED.
+﻿Build started 23/01/2015 14:48:31.
+     1>Project "C:\Users\pmr2\Documents\GitHub\GameAI\GameAI\GameAI.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\mixer_include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\image_include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BaseTank.cpp
+         BaseTank.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pmr2\Documents\GitHub\GameAI\Debug\GameAI.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\pmr2\Documents\GitHub\GameAI\Debug\GameAI.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pmr2\Documents\GitHub\GameAI\Debug\GameAI.lib" /MACHINE:X86 Debug\BaseTank.obj
+         Debug\Projectile.obj
+         Debug\ProjectileManager.obj
+         Debug\Collisions.obj
+         Debug\ControlledTank.obj
+         Debug\GameObject.obj
+         Debug\GameScreen.obj
+         Debug\GameScreenLevel1.obj
+         Debug\GameScreenManager.obj
+         Debug\LevelMap.obj
+         Debug\ObstacleManager.obj
+         Debug\Source.obj
+         Debug\TankManager.obj
+         Debug\Texture2D.obj
+         Debug\tinystr.obj
+         Debug\tinyxml.obj
+         Debug\tinyxmlerror.obj
+         Debug\tinyxmlparser.obj
+         Debug\Waypoint.obj
+         Debug\WaypointManager.obj
+         ..\gl\glut32.lib
+         SDL\SDL2.lib
+         SDL\SDL2main.lib
+         SDL\SDL2_image.lib
+         SDL\SDL2_mixer.lib
+         GameAI.vcxproj -> C:\Users\pmr2\Documents\GitHub\GameAI\Debug\GameAI.exe
+     1>Done Building Project "C:\Users\pmr2\Documents\GitHub\GameAI\GameAI\GameAI.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:05.79
+Time Elapsed 00:00:02.12

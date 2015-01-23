@@ -513,6 +513,7 @@ struct TankSetupDetails
 	Vector2D	StartPosition;
 	std::string TankImagePath;
 	std::string ManImagePath;
+	float		TurnRate;
 	int			Health;
 	float		Fuel;
 	float		Mass;

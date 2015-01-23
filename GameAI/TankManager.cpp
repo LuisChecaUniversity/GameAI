@@ -70,13 +70,14 @@ void TankManager::LoadTanks(SDL_Renderer* renderer)
 			details.StudentName			= tankElement->Attribute("studentName");
 			details.TankImagePath		= tankElement->Attribute("tankPath");
 			details.ManImagePath		= tankElement->Attribute("manPath");
+			details.TurnRate			= (float)atof(tankElement->Attribute("turnRate"));
 			details.StartPosition		= Vector2D((float)atof(tankElement->Attribute("x")), (float)atof(tankElement->Attribute("y")));
 			details.Health				= atoi(tankElement->Attribute("health"));
 			details.NumOfBullets		= atoi(tankElement->Attribute("bullets"));
 			details.NumOfRockets		= atoi(tankElement->Attribute("rockets"));
 			details.Fuel				= (float)atof(tankElement->Attribute("fuel"));
 			details.Mass				= (float)atof(tankElement->Attribute("mass"));
-			details.MaxSpeed			= (float)atof(tankElement->Attribute("maxspeed"));
+			details.MaxSpeed			= (float)atof(tankElement->Attribute("maxSpeed"));
 			details.LeftCannonAttached	= (bool)atoi(tankElement->Attribute("leftCannon"));
 			details.RightCannonAttached = (bool)atoi(tankElement->Attribute("rightCannon"));
 

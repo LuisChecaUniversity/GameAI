@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
- <tank studentName="ControlledTank" tankPath="Images\TankSmall.png" manPath="Images\TankSmallMan.png" x="250" y="150" health="100" bullets="100" rockets="100" fuel="60" mass="1" maxspeed="75" leftCannon="1" rightCannon="1"/>
+ <tank studentName="ControlledTank" tankPath="Images\TankSmall.png" manPath="Images\TankSmallMan.png" x="250" y="150" health="100" bullets="100" turnRate="1" rockets="100" fuel="60" mass="1" maxSpeed="75" leftCannon="1" rightCannon="1"/>
 </data>
