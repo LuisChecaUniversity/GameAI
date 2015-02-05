@@ -133,23 +133,23 @@ void ControlledTank::Update(float deltaTime, SDL_Event e)
 	if(mTankTurnKeyDown)
 	{
 		if(mTankTurnDirection == DIRECTION_LEFT)
-			RotateHeadingByRadian(-0.05f, -1);
+			RotateHeadingByRadian(-0.05f, 1);
 		else if(mTankTurnDirection == DIRECTION_RIGHT)
-			RotateHeadingByRadian(0.05f, -1);
+			RotateHeadingByRadian(0.05f, 1);
 	}
 	if(mTankMoveKeyDown)
 	{
 		if(mTankMoveDirection == DIRECTION_FORWARD)
 		{
-			mCurrentSpeed += kSpeedIncrement*deltaTime;
-			if(mCurrentSpeed > GetMaxSpeed())
-				mCurrentSpeed = GetMaxSpeed();
-		}
-		else if(mTankMoveDirection == DIRECTION_BACKWARD)
-		{
 			mCurrentSpeed -= kSpeedIncrement*deltaTime;
 			if(mCurrentSpeed < -GetMaxSpeed())
 				mCurrentSpeed = -GetMaxSpeed();
+		}
+		else if(mTankMoveDirection == DIRECTION_BACKWARD)
+		{
+			mCurrentSpeed += kSpeedIncrement*deltaTime;
+			if(mCurrentSpeed > GetMaxSpeed())
+				mCurrentSpeed = GetMaxSpeed();
 		}
 	}
 
@@ -185,7 +185,7 @@ void ControlledTank::MoveInHeadingDirection(float deltaTime)
 	//Finally, update the position.
 	Vector2D newPosition = GetPosition();
 		newPosition.x += mVelocity.x*deltaTime;
-		newPosition.y += (mVelocity.y*-1.0f)*deltaTime;	//Y flipped as adding to Y moves down screen.
+		newPosition.y += (mVelocity.y/**-1.0f*/)*deltaTime;	//Y flipped as adding to Y moves down screen.
 	SetPosition(newPosition);
 }
 

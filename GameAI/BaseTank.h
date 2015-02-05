@@ -36,6 +36,7 @@ public:
 	void			SetPosition(Vector2D newPosition)			{mPosition = newPosition;}
 	Vector2D		GetPointAtFrontOfTank();
 	Vector2D		GetPointAtRearOfTank();
+	Vector2D		GetCentrePosition()							{return GetCentralPosition();}
 	void			GetCornersOfTank(Vector2D* topLeft, Vector2D* topRight, Vector2D* bottomLeft, Vector2D* bottomRight);
 
 	void			IncrementTankRotationAngle(double deg);
@@ -68,6 +69,8 @@ private:
 private:
 	//We need this to pass on to bullets.
 	SDL_Renderer*	mRenderer;
+
+	TANK_TYPE		mTankType;
 
 	//Animating man in tank.
 	Texture2D*		mManSpritesheet;					//The man in the tank.

@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "BaseTank.h"
 #include "ControlledTank.h"
+#include "AiTank.h"
 #include <SDL.h>
 #include "TinyXML\tinyxml.h"
 #include "Commons.h"
@@ -68,16 +69,16 @@ void TankManager::LoadTanks(SDL_Renderer* renderer)
 		for(TiXmlElement* tankElement = root->FirstChildElement("tank"); tankElement != NULL; tankElement = tankElement->NextSiblingElement())
 		{
 			details.StudentName			= tankElement->Attribute("studentName");
+			details.TankType			= atoi(tankElement->Attribute("tankType"));
 			details.TankImagePath		= tankElement->Attribute("tankPath");
 			details.ManImagePath		= tankElement->Attribute("manPath");
-			details.TurnRate			= (float)atof(tankElement->Attribute("turnRate"));
 			details.StartPosition		= Vector2D((float)atof(tankElement->Attribute("x")), (float)atof(tankElement->Attribute("y")));
 			details.Health				= atoi(tankElement->Attribute("health"));
 			details.NumOfBullets		= atoi(tankElement->Attribute("bullets"));
 			details.NumOfRockets		= atoi(tankElement->Attribute("rockets"));
 			details.Fuel				= (float)atof(tankElement->Attribute("fuel"));
 			details.Mass				= (float)atof(tankElement->Attribute("mass"));
-			details.MaxSpeed			= (float)atof(tankElement->Attribute("maxSpeed"));
+			details.MaxSpeed			= (float)atof(tankElement->Attribute("maxspeed"));
 			details.LeftCannonAttached	= (bool)atoi(tankElement->Attribute("leftCannon"));
 			details.RightCannonAttached = (bool)atoi(tankElement->Attribute("rightCannon"));
 
@@ -98,6 +99,11 @@ BaseTank* TankManager::GetTankObject(SDL_Renderer* renderer, TankSetupDetails de
 	{
 		ControlledTank* newControlledTank = new ControlledTank(renderer, details);
 		newBaseTank = (BaseTank*)newControlledTank;
+	}
+	else if(details.StudentName == "AITank")
+	{
+		AiTank* newAiTank = new AiTank(renderer, details);
+		newBaseTank = (BaseTank*)newAiTank;
 	}
 
 	//Assert if no tank was setup.

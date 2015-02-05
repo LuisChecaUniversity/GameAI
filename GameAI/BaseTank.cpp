@@ -6,6 +6,7 @@
 #include "ProjectileManager.h"
 #include <cassert>
 #include "C2DMatrix.h"
+#include "Commons.h"
 
 using namespace::std;
 
@@ -29,6 +30,7 @@ BaseTank::BaseTank(SDL_Renderer* renderer, TankSetupDetails details)
 	ChangeState(TANKSTATE_IDLE);
 
 	//Tank details.
+	mTankType				= (TANK_TYPE)details.TankType;
 	mCurrentSpeed			= 0.0f;
 	mVelocity.Zero();
 	mHeading				= Vector2D(0.0f, 1.0f);
@@ -38,7 +40,7 @@ BaseTank::BaseTank(SDL_Renderer* renderer, TankSetupDetails details)
 
 	//TODO: Read these details in from xml.
 	mMaxForce				= 10.0f;
-	mMaxTurnRate			= details.TurnRate / 500.0f;
+	mMaxTurnRate			= 0.01f;
 
 	mRockets				= details.NumOfRockets;
 	mBullets				= details.NumOfBullets;
@@ -269,7 +271,7 @@ void BaseTank::MoveInHeadingDirection(float deltaTime)
 
 bool BaseTank::RotateHeadingToFacePosition(Vector2D target)
 {
-	Vector2D toTarget = Vec2DNormalize(target - mPosition);
+	Vector2D toTarget = Vec2DNormalize(GetCentralPosition()-target);
 
 	//Determine the angle between the heading vector and the target.
 	double angle = acos(mHeading.Dot(toTarget));
@@ -292,8 +294,9 @@ void BaseTank::RotateHeadingByRadian(double radian, int sign)
 		radian = mMaxTurnRate;
 	else if(radian < -mMaxTurnRate)
 		radian = -mMaxTurnRate;
-	IncrementTankRotationAngle(RadsToDegs(radian));
-  
+	//IncrementTankRotationAngle(RadsToDegs(radian));
+    mRotationAngle += RadsToDegs(radian)*sign;
+
 	//Usee a rotation matrix to rotate the player's heading
 	C2DMatrix RotationMatrix;
   
@@ -368,7 +371,33 @@ void BaseTank::RotateManByRadian(double radian, int sign)
 
 Rect2D BaseTank::GetAdjustedBoundingBox()
 {
-	return GameObject::GetAdjustedBoundingBox();
+	Rect2D adjustedBoundingBox = GameObject::GetAdjustedBoundingBox();
+
+	switch(mTankType)
+	{
+		case TANK_SMALL:
+			adjustedBoundingBox.x += adjustedBoundingBox.width*0.25f;
+			adjustedBoundingBox.y += adjustedBoundingBox.height*0.25f;	//Top of tank
+			adjustedBoundingBox.width *= 0.5f;
+			adjustedBoundingBox.height *= 0.55f;						//From top down to bottom.
+		break;
+
+		case TANK_MEDIUM:
+			adjustedBoundingBox.x += adjustedBoundingBox.width*0.2f;
+			adjustedBoundingBox.y += adjustedBoundingBox.height*0.2f;
+			adjustedBoundingBox.width *= 0.6f;
+			adjustedBoundingBox.height *= 0.6f;
+		break;
+
+		case TANK_LARGE:
+			adjustedBoundingBox.x += adjustedBoundingBox.width*0.15f;
+			adjustedBoundingBox.y += adjustedBoundingBox.height*0.05f;
+			adjustedBoundingBox.width *= 0.7f;
+			adjustedBoundingBox.height *= 0.8f;
+		break;
+	}
+
+	return adjustedBoundingBox;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -400,12 +429,7 @@ void BaseTank::FireRockets()
 	mFiringRocket = true;
 
 	//Get the direction of fire from the current heading.
-	Vector2D fireDirection = mHeading;
-	fireDirection.y *= -1.0f;
-
-	//If we happen to be reversing - flip the fireDirection.
-	if(fireDirection.Length() < 0.0f)
-		fireDirection *= -1;
+	Vector2D fireDirection = mHeading * -1.0f;
 
 	//Set the projectile setup details.
 	ProjectileSetupDetails details;
@@ -418,7 +442,7 @@ void BaseTank::FireRockets()
 	if( (mRockets > 0) && (mCannonAttachedLeft) )
 	{
 		details.StartPosition = GetCentralPosition();
-		details.StartPosition += fireDirection.Perp()*-28.0f;
+		details.StartPosition += fireDirection.Perp()*-14.0f;
 		ProjectileManager::Instance()->CreateProjectile(mRenderer, details, this);
 	}
 
@@ -426,7 +450,7 @@ void BaseTank::FireRockets()
 	if( (mRockets > 0) && (mCannonAttachedRight) )
 	{
 		details.StartPosition = GetCentralPosition();
-		details.StartPosition += fireDirection.Perp()*28.0f;
+		details.StartPosition += fireDirection.Perp()*14.0f;
 		ProjectileManager::Instance()->CreateProjectile(mRenderer, details, this);
 	}
 }

@@ -7,9 +7,9 @@
 const std::string kTilemapPath	= "XML Data Files/GameAI.xml";
 const std::string kTankPath		= "XML Data Files/TankData.xml";
 const std::string kBulletPath	= "Images/Bullet.png";
-const std::string kRocketPath	= "Images/Rocket.png";
+const std::string kRocketPath	= "Images/Rocket2.png";
 const std::string kMinePath		= "Images/Mine.png";
-const std::string kCannonPath	= "Images/Cannon.png";
+const std::string kCannonPath	= "Images/Cannon2.png";
 
 enum GAMEOBJECT_TYPE
 {
@@ -19,6 +19,14 @@ enum GAMEOBJECT_TYPE
 	GAMEOBJECT_MINE,
 	GAMEOBJECT_ROCKET,
 	GAMEOBJECT_TANK
+};
+
+enum TANK_TYPE
+{
+	TANK_UNKNOWN,
+	TANK_SMALL,
+	TANK_MEDIUM,
+	TANK_LARGE
 };
 
 enum SCREENS
@@ -510,10 +518,10 @@ inline bool isSecondInFOVOfFirst(Vector2D posFirst,
 struct TankSetupDetails
 {
 	std::string StudentName;
+	int			TankType;
 	Vector2D	StartPosition;
 	std::string TankImagePath;
 	std::string ManImagePath;
-	float		TurnRate;
 	int			Health;
 	float		Fuel;
 	float		Mass;
