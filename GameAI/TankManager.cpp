@@ -30,7 +30,20 @@ TankManager::~TankManager()
 void TankManager::UpdateTanks(float deltaTime, SDL_Event e)
 {
 	for(unsigned int i = 0; i < mTanks.size(); i++)
+	{
 		mTanks[i]->Update(deltaTime, e);
+
+		//If the health is below zero, delete this tank.
+		if(mTanks[i]->GetHealth() <= 0)
+			mTankIndicesToDelete.push_back(i);
+	}
+
+	//Remove one Tank a frame.
+	if(mTankIndicesToDelete.size() > 0)
+	{
+		mTanks.erase(mTanks.begin()+mTankIndicesToDelete[0]);
+		mTankIndicesToDelete.erase(mTankIndicesToDelete.begin());
+	}
 }
 
 //--------------------------------------------------------------------------------------------------

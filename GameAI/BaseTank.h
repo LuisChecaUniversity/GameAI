@@ -45,6 +45,7 @@ public:
 	void			DeductABullet()								{mBullets--;}
 	void			DeductAMine()								{mMines--;}
 	void			DeductARocket()								{mRockets--;}
+	void			TakeDamage(GAMEOBJECT_TYPE projectile);
 
 	void			Rebound(Vector2D position);
 	//---------------------------------------------------------------

@@ -31,6 +31,7 @@ BaseTank::BaseTank(SDL_Renderer* renderer, TankSetupDetails details)
 
 	//Tank details.
 	mTankType				= (TANK_TYPE)details.TankType;
+	mHealth					= details.Health;
 	mCurrentSpeed			= 0.0f;
 	mVelocity.Zero();
 	mHeading				= Vector2D(0.0f, 1.0f);
@@ -549,6 +550,27 @@ void BaseTank::Rebound(Vector2D position)
 
 	//Cut the speed.
 	mCurrentSpeed = 0.0f;
+}
+
+//--------------------------------------------------------------------------------------------------
+
+void BaseTank::TakeDamage(GAMEOBJECT_TYPE projectileType)
+{
+	//Different projectiles do different damage.
+	switch(projectileType)
+	{
+		case GAMEOBJECT_BULLET:
+			mHealth -= kBulletDamage;
+		break;
+
+		case GAMEOBJECT_ROCKET:
+			mHealth -= kRocketDamage;
+		break;
+
+		case GAMEOBJECT_MINE:
+			mHealth -= kMineDamage;
+		break;
+	}
 }
 
 //--------------------------------------------------------------------------------------------------

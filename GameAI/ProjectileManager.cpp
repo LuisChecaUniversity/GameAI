@@ -105,15 +105,25 @@ void ProjectileManager::CheckForACollision(GameObject* gameObject)
 	{
 		if(Collisions::Instance()->PointInBox(mProjectiles[i]->GetPosition(), rect))
 		{
-			//Inform bullet that is has hit a target if it was a tank.
 			if(gameObject->GetGameObjectType() == GAMEOBJECT_TANK)
 			{
-				//Do nothing if this is a bullet from the firing tank.
+				//Inform bullet that is has hit a target if it was a tank.
 				if((GameObject*)mProjectiles[i]->GetFirer() == gameObject)
+				{
+					//Do nothing if this is a bullet from the firing tank.
 					return;
+				}
+				else
+				{
+					//Damage Tank.
+					BaseTank* tank = (BaseTank*)gameObject;
+					tank->TakeDamage(mProjectiles[i]->GetGameObjectType());
+				}
 
+				//Remove this projectile.
 				mProjectiles[i]->RegisterHit();
 			}
+			
 			//Prepare this bullet for deletion.
 			if(std::find(mProjectileIndicesToDelete.begin(), mProjectileIndicesToDelete.end(), i) == mProjectileIndicesToDelete.end())
 				mProjectileIndicesToDelete.push_back(i);

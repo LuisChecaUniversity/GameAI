@@ -1,28 +1,8 @@
-﻿Build started 06/02/2015 13:48:49.
+﻿Build started 06/02/2015 14:29:00.
      1>Project "C:\Users\pmr2\Documents\GitHub\GameAI\GameAI\GameAI.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\mixer_include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\image_include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BaseTank.cpp Collisions.cpp ControlledTank.cpp GameObject.cpp GameScreenLevel1.cpp GameScreenManager.cpp LevelMap.cpp ObstacleManager.cpp Projectile.cpp ProjectileManager.cpp Source.cpp TankManager.cpp Texture2D.cpp Waypoint.cpp WaypointManager.cpp
-         TankManager.cpp
-     1>c:\users\pmr2\documents\github\gameai\gameai\tankmanager.cpp(84): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\pmr2\documents\github\gameai\gameai\tankmanager.cpp(85): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-         BaseTank.cpp
-         Generating Code...
-         Compiling...
-         ControlledTank.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         WaypointManager.cpp
-         Waypoint.cpp
-         Texture2D.cpp
-         Source.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\mixer_include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\image_include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ProjectileManager.cpp
          ProjectileManager.cpp
-         Projectile.cpp
-         ObstacleManager.cpp
-         LevelMap.cpp
-         GameScreenManager.cpp
-         GameScreenLevel1.cpp
-         GameObject.cpp
-         Collisions.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pmr2\Documents\GitHub\GameAI\Debug\GameAI.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\pmr2\Documents\GitHub\GameAI\Debug\GameAI.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pmr2\Documents\GitHub\GameAI\Debug\GameAI.lib" /MACHINE:X86 Debug\BaseTank.obj
          Debug\Projectile.obj
@@ -54,4 +34,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.63
+Time Elapsed 00:00:02.87
