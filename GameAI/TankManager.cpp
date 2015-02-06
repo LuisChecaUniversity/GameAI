@@ -72,6 +72,7 @@ void TankManager::LoadTanks(SDL_Renderer* renderer)
 			details.TankType			= atoi(tankElement->Attribute("tankType"));
 			details.TankImagePath		= tankElement->Attribute("tankPath");
 			details.ManImagePath		= tankElement->Attribute("manPath");
+			details.TurnRate			= (float)atof(tankElement->Attribute("turnRate"));
 			details.StartPosition		= Vector2D((float)atof(tankElement->Attribute("x")), (float)atof(tankElement->Attribute("y")));
 			details.Health				= atoi(tankElement->Attribute("health"));
 			details.NumOfBullets		= atoi(tankElement->Attribute("bullets"));
