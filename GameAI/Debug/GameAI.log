@@ -1,10 +1,10 @@
-﻿Build started 06/02/2015 13:10:10.
+﻿Build started 06/02/2015 13:48:49.
      1>Project "C:\Users\pmr2\Documents\GitHub\GameAI\GameAI\GameAI.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\mixer_include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\image_include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BaseTank.cpp Collisions.cpp ControlledTank.cpp GameObject.cpp GameScreenLevel1.cpp GameScreenManager.cpp LevelMap.cpp ObstacleManager.cpp Projectile.cpp ProjectileManager.cpp Source.cpp TankManager.cpp Texture2D.cpp Waypoint.cpp WaypointManager.cpp
          TankManager.cpp
-     1>c:\users\pmr2\documents\github\gameai\gameai\tankmanager.cpp(83): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
      1>c:\users\pmr2\documents\github\gameai\gameai\tankmanager.cpp(84): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\pmr2\documents\github\gameai\gameai\tankmanager.cpp(85): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
          BaseTank.cpp
          Generating Code...
          Compiling...
@@ -54,4 +54,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.21
+Time Elapsed 00:00:04.63

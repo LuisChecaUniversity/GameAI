@@ -45,6 +45,7 @@ enum BASE_TANK_STATE
 	TANKSTATE_DEAD,
 	TANKSTATE_MANFIRE,
 	TANKSTATE_CANNONFIRE,
+	TANKSTATE_DROPMINE,
 	
 	TANKSTATE_MAX
 };
@@ -529,6 +530,7 @@ struct TankSetupDetails
 	float		MaxSpeed;
 	int			NumOfBullets;
 	int			NumOfRockets;
+	int			NumOfMines;
 	bool		LeftCannonAttached;
 	bool		RightCannonAttached;
 };

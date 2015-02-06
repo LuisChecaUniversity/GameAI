@@ -44,6 +44,7 @@ BaseTank::BaseTank(SDL_Renderer* renderer, TankSetupDetails details)
 
 	mRockets				= details.NumOfRockets;
 	mBullets				= details.NumOfBullets;
+	mMines					= details.NumOfMines;
 	mCannonAttachedLeft		= details.LeftCannonAttached;
 	mCannonAttachedRight	= details.RightCannonAttached;
 
@@ -121,6 +122,10 @@ void BaseTank::Update(float deltaTime, SDL_Event e)
 					ChangeState(TANKSTATE_IDLE);
 				}
 			}
+		break;
+
+		case TANKSTATE_DROPMINE:
+			ChangeState(TANKSTATE_IDLE);
 		break;
 	}
 
@@ -200,7 +205,10 @@ void BaseTank::ChangeState(BASE_TANK_STATE newState)
 						mCannonFireTime  = 0.0f;
 					}
 				}
+			break;
 
+			case TANKSTATE_DROPMINE:
+				DropAMine();
 			break;
 		}
 	}
@@ -459,6 +467,16 @@ void BaseTank::FireRockets()
 
 void BaseTank::DropAMine()
 {
+	//Set the projectile setup details.
+	ProjectileSetupDetails details;
+	details.Direction		= Vector2D();
+	details.GameObjectType	= GAMEOBJECT_MINE;
+	details.ImagePath		= kMinePath;
+	details.RotationAngle	= 0.0f;
+	details.StartPosition   = GetCentralPosition();
+
+	//Drop the mine.
+	ProjectileManager::Instance()->CreateProjectile(mRenderer, details, this);
 }
 
 //--------------------------------------------------------------------------------------------------

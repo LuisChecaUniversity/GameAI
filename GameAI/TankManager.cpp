@@ -77,6 +77,7 @@ void TankManager::LoadTanks(SDL_Renderer* renderer)
 			details.Health				= atoi(tankElement->Attribute("health"));
 			details.NumOfBullets		= atoi(tankElement->Attribute("bullets"));
 			details.NumOfRockets		= atoi(tankElement->Attribute("rockets"));
+			details.NumOfMines			= atoi(tankElement->Attribute("mines"));
 			details.Fuel				= (float)atof(tankElement->Attribute("fuel"));
 			details.Mass				= (float)atof(tankElement->Attribute("mass"));
 			details.MaxSpeed			= (float)atof(tankElement->Attribute("maxspeed"));

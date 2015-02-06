@@ -121,9 +121,14 @@ void ControlledTank::Update(float deltaTime, SDL_Event e)
 					mManTurnDirection	= DIRECTION_UNKNOWN;
 				break;
 
-				//Firing input.
+				//Rocket input.
 				case SDLK_1:
 					ChangeState(TANKSTATE_IDLE);
+				break;
+
+				//Drop Mine input.
+				case SDLK_3:
+					ChangeState(TANKSTATE_DROPMINE);
 				break;
 			}
 		break;
