@@ -4,11 +4,13 @@
 #include <SDL.h>
 #include "TinyXML\tinyxml.h"
 
+//Initialise the instance to null.
+ObstacleManager* ObstacleManager::mInstance = NULL;
+
 //--------------------------------------------------------------------------------------------------
 
-ObstacleManager::ObstacleManager(SDL_Renderer* renderer)
+ObstacleManager::ObstacleManager()
 {
-	LoadObstacles(renderer);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -18,6 +20,25 @@ ObstacleManager::~ObstacleManager()
 	for(unsigned int i = 0; i < mObstacles.size(); i++)
 		delete mObstacles[i];
 	mObstacles.clear();
+}
+
+//--------------------------------------------------------------------------------------------------
+
+void ObstacleManager::Init(SDL_Renderer* renderer)
+{
+	LoadObstacles(renderer);
+}
+
+//--------------------------------------------------------------------------------------------------
+
+ObstacleManager* ObstacleManager::Instance()
+{
+	if(!mInstance)
+	{
+		mInstance = new ObstacleManager;
+	}
+
+	return mInstance;
 }
 
 //--------------------------------------------------------------------------------------------------

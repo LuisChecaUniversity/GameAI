@@ -10,7 +10,6 @@ using namespace::std;
 class Texture2D;
 class LevelMap;
 class ObstacleManager;
-class TankManager;
 
 class GameScreenLevel1 : GameScreen
 {
@@ -26,8 +25,6 @@ public:
 private:
 	Texture2D*				 mBackgroundTexture;
 	LevelMap*				 mLevelMap;
-	ObstacleManager*		 mObstacleManager;
-	TankManager*			 mTankManager;
 };
 
 

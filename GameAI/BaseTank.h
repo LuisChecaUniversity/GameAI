@@ -18,36 +18,38 @@ public:
 
 	virtual void	Update(float deltaTime, SDL_Event e);
 	void			Render();
-	virtual Rect2D	GetAdjustedBoundingBox();
+	Rect2D			GetAdjustedBoundingBox();
 
 	//Attributes.
-	int				GetHealth()									{return mHealth;}
-	int				GetBullets()								{return mBullets;}
-	int				GetRockets()								{return mRockets;}
-	int				GetFuel()									{return mFuel;}
-	int				GetMines()									{return mMines;}
+	int				GetHealth()												{return mHealth;}
+	int				GetBullets()											{return mBullets;}
+	int				GetRockets()											{return mRockets;}
+	int				GetFuel()												{return mFuel;}
+	int				GetMines()												{return mMines;}
 
 	//Movement.
-	double			GetMass()									{return mMass;}
-	double			GetMaxSpeed()								{return mMaxSpeed;}
-	double			GetMaxForce()								{return mMaxForce;}
-	double			GetMaxTurnRate()							{return mMaxTurnRate;}
+	double			GetMass()												{return mMass;}
+	double			GetMaxSpeed()											{return mMaxSpeed;}
+	double			GetMaxForce()											{return mMaxForce;}
+	double			GetMaxTurnRate()										{return mMaxTurnRate;}
 
-	void			SetPosition(Vector2D newPosition)			{mPosition = newPosition;}
+	void			SetPosition(Vector2D newPosition)						{mPosition = newPosition;}
 	Vector2D		GetPointAtFrontOfTank();
 	Vector2D		GetPointAtRearOfTank();
-	Vector2D		GetCentrePosition()							{return GetCentralPosition();}
+	Vector2D		GetCentrePosition()										{return GetCentralPosition();}
 	void			GetCornersOfTank(Vector2D* topLeft, Vector2D* topRight, Vector2D* bottomLeft, Vector2D* bottomRight);
 
 	void			IncrementTankRotationAngle(double deg);
 	void			IncrementManRotationAngle(double deg);
 
-	void			DeductABullet()								{mBullets--;}
-	void			DeductAMine()								{mMines--;}
-	void			DeductARocket()								{mRockets--;}
+	void			DeductABullet()											{mBullets--;}
+	void			DeductAMine()											{mMines--;}
+	void			DeductARocket()											{mRockets--;}
 	void			TakeDamage(GAMEOBJECT_TYPE projectile);
 
 	void			Rebound(Vector2D position);
+
+	Vector2D		GetHeading()											{return mHeading;}
 	//---------------------------------------------------------------
 protected:
 	virtual void	MoveInHeadingDirection(float deltaTime);
@@ -55,6 +57,7 @@ protected:
 	bool			RotateHeadingToFacePosition(Vector2D target);
 	void			RotateHeadingByRadian(double radian, int sign);		//Sign is direction of turn. Either -1 or 1.
 	void			RotateManByRadian(double radian, int sign);
+
 	void			SetHeading(Vector2D newHeading);
 
 	void			FireABullet();

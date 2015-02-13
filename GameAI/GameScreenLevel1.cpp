@@ -23,10 +23,10 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer
 	WaypointManager::Instance();
 
 	//Set up the obstacles.
-	mObstacleManager = new ObstacleManager(renderer);
+	ObstacleManager::Instance()->Init(renderer);
 
 	//Set up the tanks.
-	mTankManager = new TankManager(renderer);
+	TankManager::Instance()->Init(renderer);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -36,14 +36,6 @@ GameScreenLevel1::~GameScreenLevel1()
 	//Level map.
 	delete mLevelMap;
 	mLevelMap = NULL;
-
-	//Obstacle manager.
-	delete mObstacleManager;
-	mObstacleManager = NULL;
-
-	//Tank manager.
-	delete mTankManager;
-	mTankManager = NULL;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -54,10 +46,10 @@ void GameScreenLevel1::Render()
 	mLevelMap->Render();
 
 	//Draw the obstacles over the level map.
-	mObstacleManager->RenderObstacles();
+	ObstacleManager::Instance()->RenderObstacles();
 
 	//Draw the tanks after everything else.
-	mTankManager->RenderTanks();
+	TankManager::Instance()->RenderTanks();
 
 	//Draw the bullets.
 	ProjectileManager::Instance()->RenderProjectiles();
@@ -83,18 +75,18 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 	}
 
 	//Update the obstacles.
-	mObstacleManager->UpdateObstacles(deltaTime, e);
+	ObstacleManager::Instance()->UpdateObstacles(deltaTime, e);
 
 	//Update the tanks.
-	mTankManager->UpdateTanks(deltaTime, e);
+	TankManager::Instance()->UpdateTanks(deltaTime, e);
 	//Do Collision checks.
-	mTankManager->CheckForCollisions(mObstacleManager->GetObstacles());
+	TankManager::Instance()->CheckForCollisions();
 
 	//Update the bullets.
 	ProjectileManager::Instance()->UpdateProjectiles(deltaTime);
 	//Do collision checks.
-	ProjectileManager::Instance()->CheckForCollisions(mObstacleManager->GetObstacles());
-	ProjectileManager::Instance()->CheckForCollisions(mTankManager->GetTanks());
+	ProjectileManager::Instance()->CheckForCollisions(ObstacleManager::Instance()->GetObstacles());
+	ProjectileManager::Instance()->CheckForCollisions(TankManager::Instance()->GetTanks());
 
 }
 

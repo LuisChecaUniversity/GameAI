@@ -19,24 +19,29 @@ class TankManager
 {
 	//---------------------------------------------------------------
 public:
-	TankManager(SDL_Renderer* renderer);
 	~TankManager();
+	static TankManager* Instance();
 
+	void				Init(SDL_Renderer* renderer);
 	vector<BaseTank*>	GetTanks()									{return mTanks;}
+	vector<BaseTank*>	GetVisibleTanks(BaseTank* tank);
 	void				UpdateTanks(float deltaTime, SDL_Event e);
 	void				RenderTanks();
 
-	void				CheckForCollisions(vector<GameObject*> listOfObjects);
+	void				CheckForCollisions();
 
 	//---------------------------------------------------------------
 private:
+	TankManager();
 	void		LoadTanks(SDL_Renderer* renderer);
 	BaseTank*	GetTankObject(SDL_Renderer* renderer, TankSetupDetails details);
 
 	//---------------------------------------------------------------
 private:
-	vector<BaseTank*> mTanks;
-	vector<int>		  mTankIndicesToDelete;
+	static TankManager* mInstance;
+
+	vector<BaseTank*>	mTanks;
+	vector<int>			mTankIndicesToDelete;
 };
 
 //--------------------------------------------------------------------------------------------------

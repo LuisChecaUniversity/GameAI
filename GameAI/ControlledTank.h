@@ -20,7 +20,6 @@ public:
 
 	//---------------------------------------------------------------
 protected:
-	Rect2D	GetAdjustedBoundingBox();
 	void	MoveInHeadingDirection(float deltaTime);
 
 private:

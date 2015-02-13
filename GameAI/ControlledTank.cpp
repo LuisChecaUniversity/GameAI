@@ -1,4 +1,5 @@
 #include "ControlledTank.h"
+#include "TankManager.h"
 #include "Commons.h"
 
 //--------------------------------------------------------------------------------------------------
@@ -138,9 +139,9 @@ void ControlledTank::Update(float deltaTime, SDL_Event e)
 	if(mTankTurnKeyDown)
 	{
 		if(mTankTurnDirection == DIRECTION_LEFT)
-			RotateHeadingByRadian(-0.05f, 1);
-		else if(mTankTurnDirection == DIRECTION_RIGHT)
 			RotateHeadingByRadian(0.05f, 1);
+		else if(mTankTurnDirection == DIRECTION_RIGHT)
+			RotateHeadingByRadian(0.05f, -1);
 	}
 	if(mTankMoveKeyDown)
 	{
@@ -167,6 +168,9 @@ void ControlledTank::Update(float deltaTime, SDL_Event e)
 			RotateManByRadian(0.05f, 1);
 	}
 
+	//Test fov.
+	TankManager::Instance()->GetVisibleTanks(this);
+
 	//Call parent update.
 	BaseTank::Update(deltaTime, e);
 }
@@ -192,21 +196,6 @@ void ControlledTank::MoveInHeadingDirection(float deltaTime)
 		newPosition.x += mVelocity.x*deltaTime;
 		newPosition.y += (mVelocity.y/**-1.0f*/)*deltaTime;	//Y flipped as adding to Y moves down screen.
 	SetPosition(newPosition);
-}
-
-//--------------------------------------------------------------------------------------------------
-
-Rect2D ControlledTank::GetAdjustedBoundingBox()
-{
-	//Return an adjusted bounding box to use for collisions.
-	Rect2D boundingBox = BaseTank::GetAdjustedBoundingBox();
-
-	//Move the box position in slightly.
-	boundingBox.x += boundingBox.width*0.2f;
-	//Resize the width to encompass just the car image.
-	boundingBox.width *= 0.6f;
-
-	return boundingBox;
 }
 
 //--------------------------------------------------------------------------------------------------

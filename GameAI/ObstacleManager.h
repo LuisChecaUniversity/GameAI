@@ -17,19 +17,26 @@ class ObstacleManager
 {
 	//---------------------------------------------------------------
 public:
-	ObstacleManager(SDL_Renderer* renderer);
 	~ObstacleManager();
 
+	static ObstacleManager* Instance();
+
+	void				Init(SDL_Renderer* renderer);
 	vector<GameObject*> GetObstacles()									{return mObstacles;}
 	void				UpdateObstacles(float deltaTime, SDL_Event e);
 	void				RenderObstacles();
 
 	//---------------------------------------------------------------
 private:
+	ObstacleManager();
+
 	void   LoadObstacles(SDL_Renderer* renderer);
 	string GetImagePath(int id);
+
 	//---------------------------------------------------------------
 private:
+	static ObstacleManager* mInstance;
+
 	vector<GameObject*> mObstacles;
 };
 

@@ -2,18 +2,23 @@
 #include "GameObject.h"
 #include "BaseTank.h"
 #include "ControlledTank.h"
+#include "DumbTank.h"
 //#include "AiTank.h"
 #include <SDL.h>
 #include "TinyXML\tinyxml.h"
 #include "Commons.h"
 #include "Collisions.h"
+#include "ObstacleManager.h"
 #include <cassert>
+
+//Initialise the instance to null.
+TankManager* TankManager::mInstance = NULL;
 
 //--------------------------------------------------------------------------------------------------
 
-TankManager::TankManager(SDL_Renderer* renderer)
+TankManager::TankManager()
 {
-	LoadTanks(renderer);
+	
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -23,6 +28,25 @@ TankManager::~TankManager()
 	for(unsigned int i = 0; i < mTanks.size(); i++)
 		delete mTanks[i];
 	mTanks.clear();
+}
+
+//--------------------------------------------------------------------------------------------------
+
+TankManager* TankManager::Instance()
+{
+	if(!mInstance)
+	{
+		mInstance = new TankManager;
+	}
+
+	return mInstance;
+}
+
+//--------------------------------------------------------------------------------------------------
+
+void TankManager::Init(SDL_Renderer* renderer)
+{
+	LoadTanks(renderer);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -115,6 +139,11 @@ BaseTank* TankManager::GetTankObject(SDL_Renderer* renderer, TankSetupDetails de
 		ControlledTank* newControlledTank = new ControlledTank(renderer, details);
 		newBaseTank = (BaseTank*)newControlledTank;
 	}
+	else if(details.StudentName == "DumbTank")
+	{
+		DumbTank* newDumbTank = new DumbTank(renderer, details);
+		newBaseTank = (BaseTank*)newDumbTank;
+	}
 /*	else if(details.StudentName == "AITank")
 	{
 		AiTank* newAiTank = new AiTank(renderer, details);
@@ -130,8 +159,9 @@ BaseTank* TankManager::GetTankObject(SDL_Renderer* renderer, TankSetupDetails de
 
 //--------------------------------------------------------------------------------------------------
 
-void TankManager::CheckForCollisions(vector<GameObject*> listOfObjects)
+void TankManager::CheckForCollisions()
 {
+	vector<GameObject*> listOfObjects = ObstacleManager::Instance()->GetObstacles();
 	Vector2D tl, tr, bl, br;
 
 	for(unsigned int i = 0; i < listOfObjects.size(); i++)
@@ -149,6 +179,34 @@ void TankManager::CheckForCollisions(vector<GameObject*> listOfObjects)
 			}
 		}
 	}
+}
+
+//--------------------------------------------------------------------------------------------------
+
+vector<BaseTank*>	TankManager::GetVisibleTanks(BaseTank* tank)
+{
+	vector<BaseTank*> mVisibleTanks;
+
+	for(int i = 0; i < mTanks.size(); i++)
+	{
+		//Don't test self.
+		if(mTanks[i] != tank)
+		{
+			//TODO: Not getting the correct heading???
+			Vector2D heading = mTanks[i]->GetHeading();
+			heading.Normalize();
+			Vector2D vecToTarget = tank->GetCentrePosition()-mTanks[i]->GetCentrePosition();
+			vecToTarget.Normalize();
+			float dotProduct = heading.Dot(vecToTarget);
+			if(dotProduct > 0.9f)
+			{
+				mVisibleTanks.push_back(mTanks[i]);
+				cout << "Can see you!!" << endl;
+			}
+		}
+	}
+
+	return mVisibleTanks;
 }
 
 //--------------------------------------------------------------------------------------------------
