@@ -304,7 +304,7 @@ void BaseTank::RotateHeadingByRadian(double radian, int sign)
 	else if(radian < -mMaxTurnRate)
 		radian = -mMaxTurnRate;
 	//IncrementTankRotationAngle(RadsToDegs(radian));
-    mRotationAngle += RadsToDegs(radian)*-sign;
+    mRotationAngle += RadsToDegs(radian)*sign;
 
 	//Usee a rotation matrix to rotate the player's heading
 	C2DMatrix RotationMatrix;
@@ -441,8 +441,8 @@ void BaseTank::FireRockets()
 	mFiringRocket = true;
 
 	//Get the direction of fire from the current heading.
-	Vector2D fireDirection = mHeading;
-	fireDirection.y *= -1;
+	Vector2D fireDirection = mHeading * -1;
+	//fireDirection.y *= -1;
 
 	//Set the projectile setup details.
 	ProjectileSetupDetails details;

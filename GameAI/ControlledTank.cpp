@@ -139,9 +139,9 @@ void ControlledTank::Update(float deltaTime, SDL_Event e)
 	if(mTankTurnKeyDown)
 	{
 		if(mTankTurnDirection == DIRECTION_LEFT)
-			RotateHeadingByRadian(0.05f, 1);
-		else if(mTankTurnDirection == DIRECTION_RIGHT)
 			RotateHeadingByRadian(0.05f, -1);
+		else if(mTankTurnDirection == DIRECTION_RIGHT)
+			RotateHeadingByRadian(0.05f, 1);
 	}
 	if(mTankMoveKeyDown)
 	{

@@ -1,4 +1,4 @@
-﻿Build started 13/02/2015 14:55:00.
+﻿Build started 13/02/2015 15:19:53.
      1>Project "C:\Users\pmr2\Documents\GitHub\GameAI\GameAI\GameAI.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\mixer_include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\include /IC:\Users\pmr2\Documents\GitHub\GameAI\GameAI\\SDL\image_include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BaseTank.cpp
