@@ -169,7 +169,7 @@ void ControlledTank::Update(float deltaTime, SDL_Event e)
 	}
 
 	//Test fov.
-	TankManager::Instance()->GetVisibleTanks(this);
+	//TankManager::Instance()->GetVisibleTanks(this);
 
 	//Call parent update.
 	BaseTank::Update(deltaTime, e);

@@ -24,7 +24,7 @@ public:
 
 	void				Init(SDL_Renderer* renderer);
 	vector<BaseTank*>	GetTanks()									{return mTanks;}
-	vector<BaseTank*>	GetVisibleTanks(BaseTank* tank);
+	vector<BaseTank*>	GetVisibleTanks(BaseTank* lookingTank);
 	void				UpdateTanks(float deltaTime, SDL_Event e);
 	void				RenderTanks();
 

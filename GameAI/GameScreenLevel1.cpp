@@ -80,7 +80,7 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 	//Update the tanks.
 	TankManager::Instance()->UpdateTanks(deltaTime, e);
 	//Do Collision checks.
-	TankManager::Instance()->CheckForCollisions();
+	//TankManager::Instance()->CheckForCollisions();
 
 	//Update the bullets.
 	ProjectileManager::Instance()->UpdateProjectiles(deltaTime);

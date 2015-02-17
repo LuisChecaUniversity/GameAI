@@ -183,25 +183,27 @@ void TankManager::CheckForCollisions()
 
 //--------------------------------------------------------------------------------------------------
 
-vector<BaseTank*>	TankManager::GetVisibleTanks(BaseTank* tank)
+vector<BaseTank*>	TankManager::GetVisibleTanks(BaseTank* lookingTank)
 {
 	vector<BaseTank*> mVisibleTanks;
 
 	for(int i = 0; i < mTanks.size(); i++)
 	{
 		//Don't test self.
-		if(mTanks[i] != tank)
+		if(mTanks[i] != lookingTank)
 		{
 			//TODO: Not getting the correct heading???
-			Vector2D heading = mTanks[i]->GetHeading();
+			Vector2D heading = lookingTank->GetHeading();
 			heading.Normalize();
-			Vector2D vecToTarget = tank->GetCentrePosition()-mTanks[i]->GetCentrePosition();
+			Vector2D vecToTarget =lookingTank->GetCentrePosition()-mTanks[i]->GetCentrePosition();
 			vecToTarget.Normalize();
+			//cout << "Heading x = " << heading.x << " y = " << heading.y << endl;
 			float dotProduct = heading.Dot(vecToTarget);
+			//cout << "dot = " << dotProduct << endl;
 			if(dotProduct > 0.9f)
 			{
 				mVisibleTanks.push_back(mTanks[i]);
-				cout << "Can see you!!" << endl;
+				//cout << "Can see you!!" << endl;
 			}
 		}
 	}

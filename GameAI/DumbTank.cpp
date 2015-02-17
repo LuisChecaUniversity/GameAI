@@ -1,4 +1,5 @@
 #include "DumbTank.h"
+#include "TankManager.h"
 
 //--------------------------------------------------------------------------------------------------
 
@@ -24,6 +25,8 @@ void DumbTank::ChangeState(BASE_TANK_STATE newState)
 void DumbTank::Update(float deltaTime, SDL_Event e)
 {
 	BaseTank::Update(deltaTime, e);
+
+	TankManager::Instance()->GetVisibleTanks(this);
 }
 
 //--------------------------------------------------------------------------------------------------
