@@ -12,9 +12,11 @@ GameObject::GameObject(SDL_Renderer* renderer, GAMEOBJECT_TYPE typeOfGameObject,
 	mTexture = new Texture2D(renderer);
 	mTexture->LoadFromFile(imagePath);
 
-	mPosition		= startPosition;
-	mRotationAngle	= 0.0f;
-	mGameObjectType = typeOfGameObject;
+	mPosition		 = startPosition;
+	mRotationAngle	 = 0.0f;
+	mGameObjectType  = typeOfGameObject;
+
+	mCollisionRadius = 10.0f;
 }
 
 //--------------------------------------------------------------------------------------------------

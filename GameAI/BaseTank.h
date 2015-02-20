@@ -29,6 +29,7 @@ public:
 
 	//Movement.
 	double			GetMass()												{return mMass;}
+	double			GetCurrentSpeed()										{return mCurrentSpeed;}
 	double			GetMaxSpeed()											{return mMaxSpeed;}
 	double			GetMaxForce()											{return mMaxForce;}
 	double			GetMaxTurnRate()										{return mMaxTurnRate;}

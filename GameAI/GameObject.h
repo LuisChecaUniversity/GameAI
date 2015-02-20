@@ -20,6 +20,7 @@ public:
 	virtual Rect2D		GetAdjustedBoundingBox();
 	Vector2D			GetPosition()														{return mPosition;}
 	Vector2D			GetCentralPosition();
+	double				GetCollisionRadius()												{return mCollisionRadius;}
 
 	GAMEOBJECT_TYPE		GetGameObjectType()													{return mGameObjectType;}
 	//---------------------------------------------------------------
@@ -27,6 +28,8 @@ protected:
 	Texture2D*	mTexture;
 	Vector2D	mPosition;
 	double		mRotationAngle;
+
+	double		mCollisionRadius;
 
 private:
 	GAMEOBJECT_TYPE mGameObjectType;

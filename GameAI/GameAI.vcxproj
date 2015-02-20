@@ -67,6 +67,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AITank\AiTank.cpp" />
+    <ClCompile Include="AITank\SteeringBehaviours.cpp" />
     <ClCompile Include="BaseTank.cpp" />
     <ClCompile Include="DumbTank.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -90,6 +92,8 @@
     <ClCompile Include="WaypointManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AITank\AiTank.h" />
+    <ClInclude Include="AITank\SteeringBehaviours.h" />
     <ClInclude Include="BaseTank.h" />
     <ClInclude Include="DumbTank.h" />
     <ClInclude Include="Projectile.h" />

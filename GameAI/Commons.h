@@ -64,6 +64,15 @@ enum MOVE_DIRECTION
 	DIRECTION_BACKWARD
 };
 
+enum STEERING_BEHAVIOUR
+{
+	STEERING_SEEK,
+	STEERING_FLEE,
+	STEERING_ARRIVE,
+	STEERING_INTRPOSE,
+	STEERING_OBSTACLEAVOIDANCE
+};
+
 struct Rect2D
 {
 	double x;
@@ -163,6 +172,22 @@ struct Vector2D
   {
     x -= rhs.x;
     y -= rhs.y;
+
+    return *this;
+  }
+
+  const Vector2D& operator*(const Vector2D &rhs)
+  {
+    x *= rhs.x;
+    y *= rhs.y;
+
+    return *this;
+  }
+
+  const Vector2D& operator*=(const Vector2D &rhs)
+  {
+    x *= rhs.x;
+    y *= rhs.y;
 
     return *this;
   }
