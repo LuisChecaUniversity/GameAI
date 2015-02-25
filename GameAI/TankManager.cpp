@@ -3,7 +3,7 @@
 #include "BaseTank.h"
 #include "ControlledTank.h"
 #include "DumbTank.h"
-//#include "AiTank.h"
+#include "Tank_c008101c.h"
 #include <SDL.h>
 #include "TinyXML\tinyxml.h"
 #include "Commons.h"
@@ -144,11 +144,11 @@ BaseTank* TankManager::GetTankObject(SDL_Renderer* renderer, TankSetupDetails de
 		DumbTank* newDumbTank = new DumbTank(renderer, details);
 		newBaseTank = (BaseTank*)newDumbTank;
 	}
-/*	else if(details.StudentName == "AITank")
+	else if(details.StudentName == "Tank_c008101c")
 	{
-		AiTank* newAiTank = new AiTank(renderer, details);
-		newBaseTank = (BaseTank*)newAiTank;
-	}*/
+		Tank_c008101c* newStudentTank = new Tank_c008101c(renderer, details);
+		newBaseTank = (BaseTank*)newStudentTank;
+	}
 
 	//Assert if no tank was setup.
 	assert(newBaseTank != NULL);
