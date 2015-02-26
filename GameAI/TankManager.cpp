@@ -3,7 +3,7 @@
 #include "BaseTank.h"
 #include "ControlledTank.h"
 #include "DumbTank.h"
-//#include "AiTank.h"
+#include "AITank/AiTank.h"
 #include <SDL.h>
 #include "TinyXML\tinyxml.h"
 #include "Commons.h"
@@ -144,11 +144,11 @@ BaseTank* TankManager::GetTankObject(SDL_Renderer* renderer, TankSetupDetails de
 		DumbTank* newDumbTank = new DumbTank(renderer, details);
 		newBaseTank = (BaseTank*)newDumbTank;
 	}
-/*	else if(details.StudentName == "AITank")
+	else if(details.StudentName == "AITank")
 	{
 		AiTank* newAiTank = new AiTank(renderer, details);
 		newBaseTank = (BaseTank*)newAiTank;
-	}*/
+	}
 
 	//Assert if no tank was setup.
 	assert(newBaseTank != NULL);
@@ -187,7 +187,7 @@ vector<BaseTank*>	TankManager::GetVisibleTanks(BaseTank* lookingTank)
 {
 	vector<BaseTank*> mVisibleTanks;
 
-	for(int i = 0; i < mTanks.size(); i++)
+	for(unsigned int i = 0; i < mTanks.size(); i++)
 	{
 		//Don't test self.
 		if(mTanks[i] != lookingTank)
@@ -198,7 +198,7 @@ vector<BaseTank*>	TankManager::GetVisibleTanks(BaseTank* lookingTank)
 			Vector2D vecToTarget =lookingTank->GetCentrePosition()-mTanks[i]->GetCentrePosition();
 			vecToTarget.Normalize();
 			//cout << "Heading x = " << heading.x << " y = " << heading.y << endl;
-			float dotProduct = heading.Dot(vecToTarget);
+			double dotProduct = heading.Dot(vecToTarget);
 			//cout << "dot = " << dotProduct << endl;
 			if(dotProduct > 0.9f)
 			{
