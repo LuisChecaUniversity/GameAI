@@ -29,14 +29,20 @@ public:
 
 	//---------------------------------------------------------------
 protected:
-	Vector2D mTargetPos;
+	double mMaxSeeAhead = 10;
+	double mMaxAvoidForce = 100;
+	Vector2D mTargetPosition;
+	Vector2D mAhead;
+	Vector2D mAhead2;
 	Deceleration mDeceleration = sonic;
 	STEERING_BEHAVIOUR mBehaviour = STEERING_SEEK;
 
 	void MoveInHeadingDirection(float deltaTime);
-	Vector2D Seek(Vector2D TargetPos);
+	Vector2D Seek(Vector2D targetPosition);
 	Vector2D Flee(Vector2D targetPosition);
 	Vector2D Arrive(Vector2D targetPosition, Deceleration deceleration);
+	Vector2D ObstacleAvoidance();
+	GameObject* MostThreateningObstacle();
 };
 
 //---------------------------------------------------------------

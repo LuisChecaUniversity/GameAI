@@ -1,5 +1,7 @@
 #include "Tank_c008101c.h"
+#include "Collisions.h"
 #include "TankManager.h"
+#include "ObstacleManager.h"
 
 //--------------------------------------------------------------------------------------------------
 Tank_c008101c::Tank_c008101c(SDL_Renderer* renderer, TankSetupDetails details) : BaseTank(renderer, details)
@@ -43,20 +45,23 @@ void Tank_c008101c::Update(float deltaTime, SDL_Event e)
 
 	if (e.button.button == SDL_BUTTON_LEFT)
 	{
-		mTargetPos = Vector2D(e.button.x, e.button.y);
+		mTargetPosition = Vector2D(e.button.x, e.button.y);
 	}
-	RotateHeadingToFacePosition(mTargetPos);
+	RotateHeadingToFacePosition(mTargetPosition);
 
 	switch (mBehaviour)
 	{
 	case STEERING_SEEK:
-		mVelocity = Seek(mTargetPos);
+		if(!mTargetPosition.isZero()) mVelocity = Seek(mTargetPosition);
+		//mBehaviour = STEERING_OBSTACLEAVOIDANCE;
 		break;
 	case STEERING_FLEE:
-		mVelocity = Flee(mTargetPos);
+		mVelocity = Flee(mTargetPosition);
+		//mBehaviour = STEERING_OBSTACLEAVOIDANCE;
 		break;
 	case STEERING_ARRIVE:
-		mVelocity = Arrive(mTargetPos, mDeceleration);
+		mVelocity = Arrive(mTargetPosition, mDeceleration);
+		//mBehaviour = STEERING_OBSTACLEAVOIDANCE;
 		break;
 	case STEERING_INTRPOSE:
 		break;
@@ -65,6 +70,7 @@ void Tank_c008101c::Update(float deltaTime, SDL_Event e)
 	default:
 		break;
 	}
+
 	BaseTank::Update(deltaTime, e);
 
 	//TankManager::Instance()->GetVisibleTanks(this);
@@ -75,6 +81,7 @@ void Tank_c008101c::MoveInHeadingDirection(float deltaTime)
 {
 	//Get the force that propels in current heading.
 	Vector2D force = (mHeading*mCurrentSpeed) - mVelocity;
+	force.Truncate(GetMaxForce());
 
 	//Acceleration = Force/Mass
 	Vector2D acceleration = force / GetMass();
@@ -82,13 +89,15 @@ void Tank_c008101c::MoveInHeadingDirection(float deltaTime)
 	//Update velocity.
 	mVelocity += acceleration * deltaTime;
 
+	// Try to avoid obstacles
+	mVelocity += ObstacleAvoidance();
+
 	//Don't allow the tank does not go faster than max speed.
 	mVelocity.Truncate(GetMaxSpeed()); //TODO: Add Penalty for going faster than MAX Speed.
 
 	//Finally, update the position.
 	Vector2D newPosition = GetPosition();
-	newPosition.x += mVelocity.x * deltaTime;
-	newPosition.y += mVelocity.y/**-1.0f*/ * deltaTime;	//Y flipped as adding to Y moves down screen.
+	newPosition += mVelocity * deltaTime;
 	SetPosition(newPosition);
 }
 
@@ -145,4 +154,39 @@ Vector2D Tank_c008101c::Arrive(Vector2D targetPosition, Deceleration deceleratio
 	}
 
 	return Vector2D(0, 0);
+}
+//--------------------------------------------------------------------------------------------------
+Vector2D Tank_c008101c::ObstacleAvoidance()
+{
+	double dynamicLength = mVelocity.Length() / GetMaxSpeed();
+	mAhead = GetPosition() + Vec2DNormalize(mVelocity) * mMaxSeeAhead * dynamicLength;
+	mAhead2 = mAhead * 0.5;
+
+	GameObject* mostThreatening = MostThreateningObstacle();
+
+	if (mostThreatening != nullptr)
+	{
+		return Vec2DNormalize(mAhead - mostThreatening->GetCentralPosition()) * mMaxAvoidForce;
+	}
+
+	return Vector2D();
+}
+
+GameObject* Tank_c008101c::MostThreateningObstacle()
+{
+	GameObject* most = nullptr;
+
+	for(GameObject* obstacle : ObstacleManager::Instance()->GetObstacles())
+	{
+		Rect2D rect = obstacle->GetAdjustedBoundingBox();
+		bool collision = Collisions::Instance()->PointInBox(mAhead, rect)
+			|| Collisions::Instance()->PointInBox(mAhead2, rect);
+
+		Vector2D pos = GetPosition();
+		if (collision && (most == nullptr || Vec2DDistance(pos, obstacle->GetPosition()) < Vec2DDistance(pos, most->GetPosition())))
+		{
+			most = obstacle;
+		}
+	}
+	return most;
 }
