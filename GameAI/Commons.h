@@ -4,12 +4,13 @@
 #include <iostream>
 #include "Constants.h"
 
-const std::string kTilemapPath	= "XML Data Files/GameAI.xml";
-const std::string kTankPath		= "XML Data Files/TankData.xml";
-const std::string kBulletPath	= "Images/Bullet.png";
-const std::string kRocketPath	= "Images/Rocket2.png";
-const std::string kMinePath		= "Images/Mine.png";
-const std::string kCannonPath	= "Images/Cannon2.png";
+const std::string kTilemapPath		= "XML Data Files/GameAI.xml";
+const std::string kTankPath			= "XML Data Files/TankData.xml";
+const std::string kBulletPath		= "Images/Bullet.png";
+const std::string kRocketPath		= "Images/Rocket2.png";
+const std::string kMinePath			= "Images/Mine.png";
+const std::string kCannonPath		= "Images/Cannon2.png";
+const std::string kMkWaypointPath	= "Images/Waypoint.png";
 
 enum GAMEOBJECT_TYPE
 {

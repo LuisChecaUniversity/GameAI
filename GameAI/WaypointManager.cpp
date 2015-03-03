@@ -30,7 +30,6 @@ WaypointManager* WaypointManager::Instance()
 	if(!mInstance)
 	{
 		mInstance = new WaypointManager;
-		mInstance->LoadWaypoints();
 	}
 
 	return mInstance;
@@ -38,7 +37,26 @@ WaypointManager* WaypointManager::Instance()
 
 //--------------------------------------------------------------------------------------------------
 
-void WaypointManager::LoadWaypoints()
+void WaypointManager::Init(SDL_Renderer* renderer)
+{
+	mInstance->LoadWaypoints(renderer);
+}
+
+//--------------------------------------------------------------------------------------------------
+
+void WaypointManager::RenderWaypoints()
+{
+#ifdef WAYPOINTS_VISIBLE
+	for(unsigned int i = 0; i < mWaypoints.size(); i++)
+	{
+		mWaypoints[i]->Render();
+	}
+#endif
+}
+
+//--------------------------------------------------------------------------------------------------
+
+void WaypointManager::LoadWaypoints(SDL_Renderer* renderer)
 {
 	//Get the whole xml document.
 	TiXmlDocument doc;
@@ -103,7 +121,7 @@ void WaypointManager::LoadWaypoints()
 							}
 
 							//Add the new waypoint with the read in details.
-							mWaypoints.push_back(new Waypoint(id, Vector2D(x,y), connections));
+							mWaypoints.push_back(new Waypoint(renderer, id, Vector2D(x,y), connections));
 							connections.clear();
 						}		
 					}
