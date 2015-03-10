@@ -24,18 +24,21 @@ public:
 	void CheckInput(SDL_Event e);
 
 	void ChangeState(BASE_TANK_STATE newState);
-
+	void Render();
 	void Update(float deltaTime, SDL_Event e);
 
 	//---------------------------------------------------------------
-protected:
-	double mMaxSeeAhead = 10;
-	double mMaxAvoidForce = 100;
+private:
+	double mMaxSeeAhead = 80;
+	Deceleration mDeceleration = snail;
+	STEERING_BEHAVIOUR mBehaviour = STEERING_ARRIVE;
+	Texture2D* mAheadTex;
+	Texture2D* mAhead2Tex;
+	Vector2D mSteeringForce;
 	Vector2D mTargetPosition;
+	Vector2D mTexCenter;
 	Vector2D mAhead;
 	Vector2D mAhead2;
-	Deceleration mDeceleration = sonic;
-	STEERING_BEHAVIOUR mBehaviour = STEERING_SEEK;
 
 	void MoveInHeadingDirection(float deltaTime);
 	Vector2D Seek(Vector2D targetPosition);

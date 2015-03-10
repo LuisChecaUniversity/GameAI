@@ -6,6 +6,13 @@
 //--------------------------------------------------------------------------------------------------
 Tank_c008101c::Tank_c008101c(SDL_Renderer* renderer, TankSetupDetails details) : BaseTank(renderer, details)
 {
+	mAheadTex = new Texture2D(renderer);
+	mAheadTex->LoadFromFile("Images/Mine.png");
+
+	mAhead2Tex = new Texture2D(renderer);
+	mAhead2Tex->LoadFromFile("Images/Mine.png");
+
+	Vector2D mTexCenter = Vector2D(-mAheadTex->GetWidth(), mAheadTex->GetHeight()) * 0.5;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -47,21 +54,17 @@ void Tank_c008101c::Update(float deltaTime, SDL_Event e)
 	{
 		mTargetPosition = Vector2D(e.button.x, e.button.y);
 	}
-	RotateHeadingToFacePosition(mTargetPosition);
 
 	switch (mBehaviour)
 	{
 	case STEERING_SEEK:
-		if(!mTargetPosition.isZero()) mVelocity = Seek(mTargetPosition);
-		//mBehaviour = STEERING_OBSTACLEAVOIDANCE;
+		mSteeringForce = Seek(mTargetPosition);
 		break;
 	case STEERING_FLEE:
-		mVelocity = Flee(mTargetPosition);
-		//mBehaviour = STEERING_OBSTACLEAVOIDANCE;
+		mSteeringForce = Flee(mTargetPosition);
 		break;
 	case STEERING_ARRIVE:
-		mVelocity = Arrive(mTargetPosition, mDeceleration);
-		//mBehaviour = STEERING_OBSTACLEAVOIDANCE;
+		mSteeringForce = Arrive(mTargetPosition, mDeceleration);
 		break;
 	case STEERING_INTRPOSE:
 		break;
@@ -72,16 +75,26 @@ void Tank_c008101c::Update(float deltaTime, SDL_Event e)
 	}
 
 	BaseTank::Update(deltaTime, e);
-
+	if (mVelocity.LengthSq() != 0)
+	{
+		RotateHeadingToFacePosition(GetCentralPosition() + mVelocity);
+	}
 	//TankManager::Instance()->GetVisibleTanks(this);
+}
+
+//--------------------------------------------------------------------------------------------------
+void Tank_c008101c::Render()
+{
+	BaseTank::Render();
+	mAheadTex->Render(mAhead + mTexCenter, 0);
+	mAhead2Tex->Render(mAhead2 + mTexCenter, 0);
 }
 
 //--------------------------------------------------------------------------------------------------
 void Tank_c008101c::MoveInHeadingDirection(float deltaTime)
 {
-	//Get the force that propels in current heading.
-	Vector2D force = (mHeading*mCurrentSpeed) - mVelocity;
-	force.Truncate(GetMaxForce());
+	Vector2D avoidance = ObstacleAvoidance();
+	Vector2D force = avoidance + mSteeringForce;
 
 	//Acceleration = Force/Mass
 	Vector2D acceleration = force / GetMass();
@@ -89,12 +102,9 @@ void Tank_c008101c::MoveInHeadingDirection(float deltaTime)
 	//Update velocity.
 	mVelocity += acceleration * deltaTime;
 
-	// Try to avoid obstacles
-	mVelocity += ObstacleAvoidance();
-
 	//Don't allow the tank does not go faster than max speed.
 	mVelocity.Truncate(GetMaxSpeed()); //TODO: Add Penalty for going faster than MAX Speed.
-
+	
 	//Finally, update the position.
 	Vector2D newPosition = GetPosition();
 	newPosition += mVelocity * deltaTime;
@@ -126,52 +136,50 @@ Vector2D Tank_c008101c::Flee(Vector2D targetPosition)
 	return (resultingVelocity - mVelocity);
 }
 
-//--------------------------- Arrive -------------------------------------
+//--------------------------------------------------------------------------------------------------
 Vector2D Tank_c008101c::Arrive(Vector2D targetPosition, Deceleration deceleration)
 {
-	Vector2D vectorToTarget = targetPosition - GetPosition();
+	Vector2D origin = GetCentralPosition();
+	origin = Vector2D(round(origin.x), round(origin.y));
+	Vector2D vectorToTarget = targetPosition - origin;
 
 	//calculate the distance to the target
 	double distance = vectorToTarget.Length();
 
 	if (distance > 0)
 	{
-		const double decelerationFineTune = 0.3;
+		const double decelerationFineTune = 0.8;
 
-		//calculate the speed required to reach the target given the desired
-		//deceleration
 		double speed = distance / ((double)deceleration * decelerationFineTune);
 
-		//make sure the velocity does not exceed the max
 		speed = min(speed, GetMaxSpeed());
 
-		//from here proceed just like Seek except we don't need to normalize 
-		//the ToTarget vector because we have already gone to the trouble
-		//of calculating its length: dist. 
 		Vector2D resultingVelocity = vectorToTarget * speed / distance;
-
-		return (resultingVelocity - mVelocity);
-	}
-
-	return Vector2D(0, 0);
-}
-//--------------------------------------------------------------------------------------------------
-Vector2D Tank_c008101c::ObstacleAvoidance()
-{
-	double dynamicLength = mVelocity.Length() / GetMaxSpeed();
-	mAhead = GetPosition() + Vec2DNormalize(mVelocity) * mMaxSeeAhead * dynamicLength;
-	mAhead2 = mAhead * 0.5;
-
-	GameObject* mostThreatening = MostThreateningObstacle();
-
-	if (mostThreatening != nullptr)
-	{
-		return Vec2DNormalize(mAhead - mostThreatening->GetCentralPosition()) * mMaxAvoidForce;
+		resultingVelocity -= mVelocity;
+		return resultingVelocity;
 	}
 
 	return Vector2D();
 }
 
+//--------------------------------------------------------------------------------------------------
+Vector2D Tank_c008101c::ObstacleAvoidance()
+{
+	double dynamicLength = mVelocity.Length() / GetMaxSpeed();
+	mAhead = GetCentralPosition() + Vec2DNormalize(mVelocity) * mMaxSeeAhead * dynamicLength;
+	mAhead2 = GetCentralPosition() + Vec2DNormalize(mVelocity) * mMaxSeeAhead * 0.5 * dynamicLength;
+
+	GameObject* mostThreatening = MostThreateningObstacle();
+
+	if (mostThreatening != nullptr)
+	{
+		return (Vec2DNormalize(mAhead - mostThreatening->GetCentralPosition()) * GetMaxSpeed());
+	}
+
+	return Vector2D();
+}
+
+//--------------------------------------------------------------------------------------------------
 GameObject* Tank_c008101c::MostThreateningObstacle()
 {
 	GameObject* most = nullptr;
@@ -179,11 +187,15 @@ GameObject* Tank_c008101c::MostThreateningObstacle()
 	for(GameObject* obstacle : ObstacleManager::Instance()->GetObstacles())
 	{
 		Rect2D rect = obstacle->GetAdjustedBoundingBox();
+		rect.x -= 20;
+		rect.y -= 20;
+		rect.height += 20;
+		rect.width += 20;
 		bool collision = Collisions::Instance()->PointInBox(mAhead, rect)
 			|| Collisions::Instance()->PointInBox(mAhead2, rect);
 
 		Vector2D pos = GetPosition();
-		if (collision && (most == nullptr || Vec2DDistance(pos, obstacle->GetPosition()) < Vec2DDistance(pos, most->GetPosition())))
+		if (collision && (most == nullptr || Vec2DDistance(pos, obstacle->GetCentralPosition()) < Vec2DDistance(pos, most->GetCentralPosition())))
 		{
 			most = obstacle;
 		}
