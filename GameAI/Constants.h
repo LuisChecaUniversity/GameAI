@@ -3,6 +3,9 @@
 
 #include <limits>
 
+//Set waypoints visible.
+#define WAYPOINTS_VISIBLE
+
 //Useful constants.
 const int     MaxInt    = (std::numeric_limits<int>::max)();
 const double  MaxDouble = (std::numeric_limits<double>::max)();

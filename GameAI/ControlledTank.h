@@ -18,6 +18,8 @@ public:
 
 	void Update(float deltaTime, SDL_Event e);
 
+	void RotateHeadingByRadian(double radian, int sign);
+
 	//---------------------------------------------------------------
 protected:
 	void	MoveInHeadingDirection(float deltaTime);

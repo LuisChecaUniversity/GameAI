@@ -187,7 +187,7 @@ vector<BaseTank*>	TankManager::GetVisibleTanks(BaseTank* lookingTank)
 {
 	vector<BaseTank*> mVisibleTanks;
 
-	for(int i = 0; i < mTanks.size(); i++)
+	for(unsigned int i = 0; i < mTanks.size(); i++)
 	{
 		//Don't test self.
 		if(mTanks[i] != lookingTank)
@@ -198,7 +198,7 @@ vector<BaseTank*>	TankManager::GetVisibleTanks(BaseTank* lookingTank)
 			Vector2D vecToTarget =lookingTank->GetCentrePosition()-mTanks[i]->GetCentrePosition();
 			vecToTarget.Normalize();
 			//cout << "Heading x = " << heading.x << " y = " << heading.y << endl;
-			float dotProduct = heading.Dot(vecToTarget);
+			double dotProduct = heading.Dot(vecToTarget);
 			//cout << "dot = " << dotProduct << endl;
 			if(dotProduct > 0.9f)
 			{

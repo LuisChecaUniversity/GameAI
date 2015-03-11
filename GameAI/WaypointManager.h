@@ -5,6 +5,7 @@
 // Waypoint Manager is a singleton that keeps hold of all the waypoints in the scene.
 // It collects its information from the XML file and can give useful information on request.
 
+#include <SDL.h>
 #include <vector>
 using namespace::std;
 
@@ -19,14 +20,16 @@ public:
 	~WaypointManager();
 
 	static WaypointManager* Instance();
+	void					Init(SDL_Renderer* renderer);
+	void					RenderWaypoints();
 
-	Waypoint* GetWaypointWithID(int id);
+	Waypoint*				GetWaypointWithID(int id);
 
 	//---------------------------------------------------------------
 private:
 	WaypointManager();
 
-	void LoadWaypoints();
+	void LoadWaypoints(SDL_Renderer* renderer);
 
 	//---------------------------------------------------------------
 private:

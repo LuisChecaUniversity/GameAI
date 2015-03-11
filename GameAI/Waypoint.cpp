@@ -1,13 +1,18 @@
 #include "Waypoint.h"
+#include "Texture2D.h"
+#include <SDL.h>
 #include <vector>
 
 using namespace::std;
 //---------------------------------------------------------------
 
-Waypoint::Waypoint(int id, Vector2D startPosition, vector<int> connectingIDs)
+Waypoint::Waypoint(SDL_Renderer* renderer, int id, Vector2D startPosition, vector<int> connectingIDs)
 {
 	mID			= id;
 	mPosition	= startPosition;
+
+	mTexture = new Texture2D(renderer);
+	mTexture->LoadFromFile(kMkWaypointPath);
 
 	mConnectedWaypointIDs = connectingIDs;
 }
@@ -17,6 +22,13 @@ Waypoint::Waypoint(int id, Vector2D startPosition, vector<int> connectingIDs)
 Waypoint::~Waypoint()
 {
 	mConnectedWaypointIDs.clear();
+}
+
+//---------------------------------------------------------------
+
+void Waypoint::Render()
+{
+	mTexture->Render(mPosition);
 }
 
 //---------------------------------------------------------------

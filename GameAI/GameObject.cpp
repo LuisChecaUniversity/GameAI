@@ -16,7 +16,7 @@ GameObject::GameObject(SDL_Renderer* renderer, GAMEOBJECT_TYPE typeOfGameObject,
 	mRotationAngle	 = 0.0f;
 	mGameObjectType  = typeOfGameObject;
 
-	mCollisionRadius = 10.0f;
+	mCollisionRadius = 100.0f;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -45,7 +45,8 @@ void GameObject::Render()
 
 Vector2D GameObject::GetCentralPosition()
 {
-	return Vector2D(mPosition.x+(mTexture->GetWidth()*0.5f), mPosition.y+(mTexture->GetHeight()*0.5f));
+	Vector2D centre = Vector2D(mPosition.x+(mTexture->GetWidth()*0.5f), mPosition.y+(mTexture->GetHeight()*0.5f));
+	return centre;
 }
 
 //--------------------------------------------------------------------------------------------------

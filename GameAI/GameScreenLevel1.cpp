@@ -20,7 +20,7 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer
 	mLevelMap = new LevelMap(renderer);
 
 	//Set up the waypoints.
-	WaypointManager::Instance();
+	WaypointManager::Instance()->Init(renderer);
 
 	//Set up the obstacles.
 	ObstacleManager::Instance()->Init(renderer);
@@ -53,6 +53,9 @@ void GameScreenLevel1::Render()
 
 	//Draw the bullets.
 	ProjectileManager::Instance()->RenderProjectiles();
+
+	//Draw the waypoints.
+	WaypointManager::Instance()->RenderWaypoints();
 }
 
 //--------------------------------------------------------------------------------------------------

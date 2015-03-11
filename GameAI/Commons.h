@@ -4,12 +4,13 @@
 #include <iostream>
 #include "Constants.h"
 
-const std::string kTilemapPath	= "XML Data Files/GameAI.xml";
-const std::string kTankPath		= "XML Data Files/TankData.xml";
-const std::string kBulletPath	= "Images/Bullet.png";
-const std::string kRocketPath	= "Images/Rocket2.png";
-const std::string kMinePath		= "Images/Mine.png";
-const std::string kCannonPath	= "Images/Cannon2.png";
+const std::string kTilemapPath		= "XML Data Files/GameAI.xml";
+const std::string kTankPath			= "XML Data Files/TankData.xml";
+const std::string kBulletPath		= "Images/Bullet.png";
+const std::string kRocketPath		= "Images/Rocket2.png";
+const std::string kMinePath			= "Images/Mine.png";
+const std::string kCannonPath		= "Images/Cannon2.png";
+const std::string kMkWaypointPath	= "Images/Waypoint.png";
 
 enum GAMEOBJECT_TYPE
 {
@@ -147,7 +148,7 @@ struct Vector2D
   //adjusts x and y so that the length of the vector does not exceed max
   inline void      Truncate(double max);
 
-  //returns the distance between this vector and th one passed as a parameter
+  //returns the distance between this vector and the one passed as a parameter
   inline double    Distance(const Vector2D &v2)const;
 
   //squared version of above.
@@ -157,7 +158,6 @@ struct Vector2D
 
   //returns the vector that is the reverse of this vector
   inline Vector2D  GetReverse()const;
-
 
   //we need some overloaded operators
   const Vector2D& operator+=(const Vector2D &rhs)

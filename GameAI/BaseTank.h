@@ -17,7 +17,7 @@ public:
 	virtual void	ChangeState(BASE_TANK_STATE newState);
 
 	virtual void	Update(float deltaTime, SDL_Event e);
-	void			Render();
+	virtual void	Render();
 	Rect2D			GetAdjustedBoundingBox();
 
 	//Attributes.
@@ -51,12 +51,14 @@ public:
 	void			Rebound(Vector2D position);
 
 	Vector2D		GetHeading()											{return mHeading;}
+	Vector2D		GetVelocity()											{return mVelocity;}
+	Vector2D		GetSide()												{return mSide;}
 	//---------------------------------------------------------------
 protected:
 	virtual void	MoveInHeadingDirection(float deltaTime);
 
 	bool			RotateHeadingToFacePosition(Vector2D target);
-	void			RotateHeadingByRadian(double radian, int sign);		//Sign is direction of turn. Either -1 or 1.
+	virtual void	RotateHeadingByRadian(double radian, int sign);		//Sign is direction of turn. Either -1 or 1.
 	void			RotateManByRadian(double radian, int sign);
 
 	void			SetHeading(Vector2D newHeading);
@@ -108,11 +110,7 @@ private:
 	int				mMines;
 	int				mRockets;
 	
-	//Movement.
-	double			mMass;
-	double			mMaxSpeed;
-	double			mMaxForce;
-	double			mMaxTurnRate;
+
 
 	//---------------------------------------------------------------
 protected:
@@ -123,6 +121,12 @@ protected:
 	Vector2D	    mVelocity;
 	Vector2D		mHeading;
 	Vector2D		mSide;	
+	
+	//Movement.
+	double			mMass;
+	double			mMaxSpeed;
+	double			mMaxForce;
+	double			mMaxTurnRate;	
 };
 
 //---------------------------------------------------------------
