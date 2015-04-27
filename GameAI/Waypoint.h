@@ -26,12 +26,12 @@ public:
 	bool		IsConnectedTo(int waypointIDToCheck);
 
 	Vector2D	GetPosition()								{return mPosition;}
+	Texture2D*		mTexture;
 
 	//---------------------------------------------------------------
 private:
 	int				mID;
 	Vector2D		mPosition;
-	Texture2D*		mTexture;
 
 	vector<int>	 mConnectedWaypointIDs;			
 };
